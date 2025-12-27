@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPI QR Code for Yogesh</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+  <h2>Pay to Yogesh</h2>
+
+  <label>Enter Amount (INR):</label><br>
+  <input type="number" id="amount" placeholder="e.g., 500.00" /><br><br>
+
+  <button onclick="generateQRCode()">Generate QR</button>
+
+  <br><br>
+  <canvas id="qrCanvas"></canvas>
+
+  <script>
+    function generateQRCode() {
+      const amount = document.getElementById("amount").value.trim();
+      if (!amount || isNaN(amount)) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      const upiId = "yogeshkumarsaini1085-2@okaxis";
+      const name = encodeURIComponent("Yogesh Kumar Saini");
+      const upiUrl = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR`;
+
+      QRCode.toCanvas(document.getElementById("qrCanvas"), upiUrl, function (error) {
+        if (error) {
+          console.error(error);
+          alert("Could not generate QR Code.");
+        } else {
+          console.log("QR Code generated for amount ₹" + amount);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
